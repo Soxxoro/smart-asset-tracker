@@ -8,9 +8,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+global.isMongoConnected = false;
+
+if (process.env.MONGO_URI) {
+    mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('MongoDB Connected successfully!');
+        global.isMongoConnected = true;
+    })
+    .catch(err => {
+        console.log('MongoDB connection failed. Falling back to local JSON database.', err.message);
+        global.isMongoConnected = false;
+    });
+} else {
+    console.log('No MONGO_URI provided. Running on Fail-Safe Local JSON Database!');
+    global.isMongoConnected = false;
+}
 
 const path = require('path');
 
