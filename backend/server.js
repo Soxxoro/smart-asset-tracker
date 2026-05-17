@@ -11,15 +11,20 @@ app.use(express.json());
 global.isMongoConnected = false;
 
 if (process.env.MONGO_URI) {
-    mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        console.log('MongoDB Connected successfully!');
-        global.isMongoConnected = true;
-    })
-    .catch(err => {
-        console.log('MongoDB connection failed. Falling back to local JSON database.', err.message);
+    try {
+        mongoose.connect(process.env.MONGO_URI)
+        .then(() => {
+            console.log('MongoDB Connected successfully!');
+            global.isMongoConnected = true;
+        })
+        .catch(err => {
+            console.log('MongoDB connection failed. Falling back to local JSON database.', err.message);
+            global.isMongoConnected = false;
+        });
+    } catch (err) {
+        console.log('MongoDB synchronous setup failed. Falling back to local JSON database.', err.message);
         global.isMongoConnected = false;
-    });
+    }
 } else {
     console.log('No MONGO_URI provided. Running on Fail-Safe Local JSON Database!');
     global.isMongoConnected = false;
