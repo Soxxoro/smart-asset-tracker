@@ -12,8 +12,19 @@ mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('MongoDB Connected'))
 .catch(err => console.log(err));
 
+const path = require('path');
+
 app.use('/api/items', require('./routes/itemRoutes'));
 
-app.listen(5000, () => {
-    console.log('Server Running on Port 5000');
+// Serve Static Frontend files in production
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
+
+// Serve the index.html for any frontend React routes
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
+});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server Running on Port ${PORT}`);
 });
