@@ -1,6 +1,6 @@
 # 📡 Smart Asset Locator & Tracker (MERN + IoT ESP32)
 
-An ultra-premium, futuristic full-stack MERN SaaS dashboard for real-time indoor asset proximity tracking. This application connects physical ESP32 microcontrollers equipped with MFRC522 RFID readers to trace household items, trace signal strength (RSSI), and display active telemetry dynamically on a glowing visual sonar radar sweep canvas.
+An ultra-premium, futuristic full-stack MERN SaaS dashboard for real-time indoor asset proximity tracking. This application connects physical ESP32 microcontrollers equipped with JRD4035 RFID readers to trace household items, trace signal strength (RSSI), and display active telemetry dynamically on a glowing visual sonar radar sweep canvas.
 
 ---
 
